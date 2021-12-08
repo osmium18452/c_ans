@@ -44,8 +44,12 @@ void print(node *head) {
     }
 }
 
-void add(node* head){
-    
+node *add(node *head) {
+    node *p = (node *) malloc(sizeof(node));
+    p->next = head;
+    head = p;
+    scanf("%s%s%s%s%s%d", head->sf.snum, head->sf.name, head->sf.sex, head->sf.birth, head->sf.email, &head->sf.salary);
+    return head;
 }
 
 int main() {
@@ -71,6 +75,8 @@ int main() {
     strcpy(p->sf.snum, "654321");*/
     char *filename = {"test.bin"};
     head = load(filename, &n);
-    print(head);
+    head= add(head);
+    save(head);
+//    print(head);
 //    save(filename, n, head);
 }
