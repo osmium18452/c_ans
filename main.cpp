@@ -12,11 +12,12 @@ struct node {
     node *next;
 };
 
-node *load(char *filename, int *n) {
+node *load(char *filename, int *n)
+{
     node *head = NULL;
     FILE *f = fopen(filename, "rb");
-    if (fread(n, sizeof(n), 1, f) == 1) {
 //        printf("....%d",*n);
+    if (fread(n, sizeof(int), 1, f) == 1) {
         for (int i = 0; i < *n; i++) {
             node *p = (node *) malloc(sizeof(stuff));
             fread(&(p->sf), sizeof(stuff), 1, f);
@@ -27,7 +28,8 @@ node *load(char *filename, int *n) {
     return head;
 }
 
-void save(char *filename, int n, node *head) {
+void save(char *filename, int n, node *head)
+{
     FILE *f = fopen(filename, "wb");
     fwrite(&n, sizeof(int), 1, f);
     while (head != NULL) {
@@ -36,7 +38,8 @@ void save(char *filename, int n, node *head) {
     }
 }
 
-void print(node *head) {
+void print(node *head)
+{
     while (head != NULL) {
         printf("worker num: %s\nname: %s\nsex: %s\nbirthday: %s\nemail: %s\nsalary: %d\n\n", head->sf.snum,
                head->sf.name, head->sf.sex, head->sf.birth, head->sf.email, head->sf.salary);
@@ -44,15 +47,48 @@ void print(node *head) {
     }
 }
 
-node *add(node *head) {
+node *add(node *head, int *n)
+{
+    (*n)++;
     node *p = (node *) malloc(sizeof(node));
     p->next = head;
     head = p;
-    scanf("%s%s%s%s%s%d", head->sf.snum, head->sf.name, head->sf.sex, head->sf.birth, head->sf.email, &head->sf.salary);
+    scanf("%s%s%s%s%s%d", head->sf.snum, head->sf.name, head->sf.sex, head->sf.birth, head->sf.email,
+          &(head->sf.salary));
     return head;
 }
 
-int main() {
+node *del(node *head, int *n, char *snum)
+{
+//    if (strcmp(head->sf.snum, snum) == 0)  printf("nnmmmnnnn");
+    if (strcmp(head->sf.snum, snum) == 0) {
+        (*n)--;
+        node *p = head;
+        head = head->next;
+//        free(p);
+//        printf("nnmmmnnnn");
+    } else {
+        node *p = head;
+        node *prev = NULL;
+        while (p != NULL && strcmp(p->sf.snum, snum) != 0) {
+            prev = p;
+            p = p->next;
+        }
+        if (p != NULL) {
+            (*n)--;
+            prev->next = p->next;
+//            free(p);
+        }
+    }
+    return head;
+}
+
+void find(node* head, char* snum){
+
+}
+
+int main()
+{
     int n = 2;
     node *head = NULL;
     /*node *p = (node *) malloc(sizeof(stuff));
@@ -73,10 +109,12 @@ int main() {
     strcpy(p->sf.sex, "woman");
     strcpy(p->sf.name, "haha");
     strcpy(p->sf.snum, "654321");*/
-    char *filename = {"test.bin"};
+    char *filename = "test.bin";
     head = load(filename, &n);
-    head= add(head);
-    save(head);
-//    print(head);
+//    printf("nnnnnn");
+    char snum[]="666777";
+//    head = del(head,&n, snum);
+//    save(filename, n, head);
+    print(head);
 //    save(filename, n, head);
 }
