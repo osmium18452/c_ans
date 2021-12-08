@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+struct stuff{
+    int snum, salary;
+    char name[30], sex[10], birth[10], email[30];
+};
+
+void addStuff(char* filename, stuff sf) {
+    FILE *f = fopen(filename, "a+");
+    fprintf(f,"%10d %-30s %-10s %-10s %-30s %10d", sf.snum, sf.name, sf.sex, sf.birth, sf.email, sf.salary);
+}
+bool deleteStuff(char *filename,stuff sf){
+    stuff allsf[1000];
+    stuff sff
+    int sfcnt=0;
+    FILE *f= fopen(filename,"r");
+    while (~fscanf(f,"%d %s %s %s %s %d", sff.snum, sff.name, sff.sex, sff.birth, sff.email, sff.salary))
+}
+
+int main() {
+
+}
